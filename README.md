@@ -5,6 +5,7 @@ A collection of Claude Code skills.
 ## Skills
 
 - [`create-onboarding-video`](skills/create-onboarding-video/SKILL.md) — Build app onboarding videos with Remotion.
+- [`ask-bookmarks`](skills/ask-bookmarks/SKILL.md) — Answer a question from your X/Twitter bookmarks via the local `ft` CLI, with a References section of tweet links.
 
 ## Usage
 
