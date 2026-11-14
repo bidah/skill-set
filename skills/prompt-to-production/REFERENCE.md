@@ -52,8 +52,9 @@ the log survives across sessions and machines.
 If the user does not want the admin id in git, leave `admin.userId` out and keep
 only `gate.env`. The helper never reads the state file at runtime.
 
-Keep released and discarded entries. They are the history of what shipped and
-they stop an id from being reused for a different feature.
+Keep released and discarded entries. They are the history of what shipped, they
+are what the status view lists under "Live for everyone", and they stop an id
+from being reused for a different feature.
 
 ## Worked example
 
