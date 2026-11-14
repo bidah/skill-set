@@ -94,27 +94,27 @@ The user's approval covers the feature they named, nothing else in preview.
 
 ## Status ("what's in preview?", "what's live?")
 
-Read the state file and reply in plain sentences with two short markdown lists,
-newest first. Never answer from memory of the session: the file is the source
-of truth. No tables and no code block; write it the way you would say it:
+Read the state file and answer with both groups, newest first, in this layout.
+Never answer from memory of the session: the file is the source of truth.
 
-> Two features are in preview right now. Only you can see them:
->
-> - **new-homepage** has been in preview since 2026-01-15. It has 1 gate and 1
->   migration waiting for release.
-> - **new-onboarding-screen** has been in preview since 2026-01-12. It has 2
->   gates and nothing waiting, so it is ready to release.
->
-> Two features are live for everyone:
->
-> - **pricing-table**, released 2026-01-10.
-> - **weekly-digest-email**, released 2026-01-03.
+```
+Prompt to production
+admin: Owner account
 
-- For each preview entry give the gate count and either how many
-  `migrations.onRelease` are still waiting or that it is ready to release.
-- Before replying, grep each preview id and say so if the hits no longer match
-  `gates`.
-- Mention discarded features only when the user asks for history.
+In preview · only the admin sees these
+  new-homepage            since 2026-01-15 · 1 gate · 1 migration on release
+  new-onboarding-screen   since 2026-01-12 · 2 gates · ready to release
+
+Live for everyone
+  pricing-table           released 2026-01-10
+  weekly-digest-email     released 2026-01-03
+```
+
+- A preview entry shows its gate count and either the number of
+  `migrations.onRelease` still waiting or "ready to release".
+- Before printing, grep each preview id and flag any entry whose hits no longer
+  match `gates`.
+- Add a "Discarded" group only when the user asks for history.
 
 ## Other requests
 
