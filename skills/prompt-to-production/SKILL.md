@@ -1,6 +1,6 @@
 ---
 name: prompt-to-production
-description: Ship features straight to production behind a gate that only the admin test user passes, track each one in a local feature log, and release it to everyone on approval by removing the gate and applying pending migrations. Use when the user says "prompt to production", wants to try a feature in production before anyone else sees it, asks for an admin-only preview or a single-user A/B test, asks what is in preview, or says a previewed feature is "ok to push to production", "ship it to everyone", or should be discarded.
+description: Ship features straight to production behind a gate that only the admin test user passes, track each one in a local feature log, and release it to everyone on approval by removing the gate and applying pending migrations. Use when the user says "prompt to production", wants to try a feature in production before anyone else sees it, asks for an admin-only preview or a single-user A/B test, asks what is in preview or what is live, or says a previewed feature is "ok to push to production", "ship it to everyone", or should be discarded.
 ---
 
 # Prompt to production
@@ -92,10 +92,32 @@ The user's approval covers the feature they named, nothing else in preview.
    return nothing.
 6. Set `status: "released"` and the `released` date, commit, and deploy.
 
+## Status ("what's in preview?", "what's live?")
+
+Read the state file and answer with both groups, newest first, in this layout.
+Never answer from memory of the session: the file is the source of truth.
+
+```
+Prompt to production
+admin: Owner account
+
+In preview · only the admin sees these
+  new-homepage            since 2026-01-15 · 1 gate · 1 migration on release
+  new-onboarding-screen   since 2026-01-12 · 2 gates · ready to release
+
+Live for everyone
+  pricing-table           released 2026-01-10
+  weekly-digest-email     released 2026-01-03
+```
+
+- A preview entry shows its gate count and either the number of
+  `migrations.onRelease` still waiting or "ready to release".
+- Before printing, grep each preview id and flag any entry whose hits no longer
+  match `gates`.
+- Add a "Discarded" group only when the user asks for history.
+
 ## Other requests
 
-- **"What's in preview?"** List the entries with `status: "preview"`: id, title,
-  created date, pending release migrations.
 - **"Drop X"** Remove the new path and its gates, keep the old path, set
   `status: "discarded"`. Leave additive migrations in place unless the user asks
   to revert them, and record what was left behind in `notes`.
